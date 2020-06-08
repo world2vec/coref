@@ -10,7 +10,7 @@ import threading
 import numpy as np
 import tensorflow as tf
 
-import util
+from coref import util
 import coref_ops
 import conll
 import metrics
