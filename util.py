@@ -15,6 +15,8 @@ import pyhocon
 
 import independent
 import overlap
+cur_dir = os.path.dirname(os.path.realpath(__file__))
+
 
 def get_model(config):
     if config['model_type'] == 'independent':
@@ -28,13 +30,13 @@ def initialize_from_env(eval_test=False):
   if "GPU" in os.environ:
     set_gpus(int(os.environ["GPU"]))
 
-  name = sys.argv[1]
+  name = os.environ["model_name"]
   print("Running experiment: {}".format(name))
 
   if eval_test:
     config = pyhocon.ConfigFactory.parse_file("test.experiments.conf")[name]
   else:
-    config = pyhocon.ConfigFactory.parse_file("experiments.conf")[name]
+    config = pyhocon.ConfigFactory.parse_file(os.path.join(cur_dir, "experiments.conf"))[name]
   config["log_dir"] = mkdirs(os.path.join(config["log_root"], name))
 
   print(pyhocon.HOCONConverter.convert(config, "hocon"))
