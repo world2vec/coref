@@ -73,9 +73,9 @@ class CorefModel(object):
     num_warmup_steps = int(num_train_steps * 0.1)
     self.global_step = tf.train.get_or_create_global_step()
     self.train_op = optimization.create_custom_optimizer(tvars,
-                      self.loss, self.config['bert_learning_rate'], self.config['task_learning_rate'],
-                      num_train_steps, num_warmup_steps, False, self.global_step, freeze=-1,
-                      task_opt=self.config['task_optimizer'], eps=config['adam_eps'])
+                                                         self.loss, self.config['bert_learning_rate'], self.config['task_learning_rate'],
+                                                         num_train_steps, num_warmup_steps, False, self.global_step, freeze=-1,
+                                                         task_opt=self.config['task_optimizer'], eps=config['adam_eps'])
 
   def start_enqueue_thread(self, session):
     with open(self.config["train_path"]) as f:
@@ -561,7 +561,7 @@ class CorefModel(object):
 
     summary_dict = {}
     if eval_mode:
-      conll_results = conll.evaluate_conll(self.config["conll_eval_path"], coref_predictions, self.subtoken_maps, official_stdout )
+      conll_results = conll.evaluate_conll(self.config["conll_eval_path"], coref_predictions, self.subtoken_maps, official_stdout)
       average_f1 = sum(results["f"] for results in conll_results.values()) / len(conll_results)
       summary_dict["Average F1 (conll)"] = average_f1
       print("Average F1 (conll): {:.2f}%".format(average_f1))
